@@ -12,12 +12,23 @@ public class Library implements Runnable{
     User user = new User();
     private final List<Book> bookList = new ArrayList<>();
     private int value;
+    Scanner scanner = new Scanner(in);
 
     public Library(int value) {
         this.value = value;
     }
 
     public Library(){}
+
+    public void addBook() {
+        out.print("Назвние книги: ");
+        String title = scanner.nextLine();
+        out.print("\nАвтор книги: ");
+        String author = scanner.nextLine();
+        out.print("\nГод издания книги: ");
+        int year = scanner.nextInt();
+        bookList.add(new Book(title, author, year, true));
+    }
 
     public void addBook(Book book) {
         bookList.add(book);
@@ -78,8 +89,7 @@ public class Library implements Runnable{
 
     @Override
     public void run() {
-        App app = new App();
-        List<Book> list = app.init().getBookList();
+        List<Book> list = getBookList();
 
         switch (value) {
             case 0: {

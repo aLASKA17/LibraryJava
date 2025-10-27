@@ -1,50 +1,73 @@
 package org.example.app;
 
-
+import static java.lang.System.*;
 import org.example.app.model.Book;
 import org.example.app.model.Library;
+import org.example.app.model.User;
+
 import java.util.List;
+import java.util.Scanner;
 
 public class App {
 
-    public Library init() {
-        Book book1 = new Book("a1asak", "srayghrsdfh", 2131, true);
-        Book book2 = new Book("seygtdrsfh", "sddgtdafshgfd", 325, false);
-        Book book3 = new Book("vfmrk234", "kdjsfhsdkjf", 457, true);
-        Book book4 = new Book("qwpzxcnm", "pleirutyv", 879, false);
-        Book book5 = new Book("zxcvbnml", "asdfghjkl", 1523, true);
-        Book book6 = new Book("plmoknij", "qazwsxedc", 678, false);
-        Book book7 = new Book("uytrewqas", "dfghjkpoi", 499, true);
+    Scanner scanner = new Scanner(in);
 
+
+    public void menuUI() {
         Library library = new Library();
-        library.addBook(book1);
-        library.addBook(book2);
-        library.addBook(book3);
-        library.addBook(book4);
-        library.addBook(book5);
-        library.addBook(book6);
-        library.addBook(book7);
-
-        return library;
+        User user = new User();
+        DataController dataController = new DataController();
+        out.println("Меню: ");
+        out.println("-------------------------------");
+        out.println("1) Добавить книгу");
+        out.println("2) Вывести список книг");
+        out.println("3) Сериализовать список");
+        out.println("4) Десериализовать список");
+        out.println("5) Сдать/Вернуть книгу");
+        out.println("6) Выход");
+        out.println("-------------------------------");
+        out.print("Выберите действие из меню");
+        int point = scanner.nextInt();
+        switch (point) {
+            case 1: {
+                library.addBook();
+                break;
+            }
+            case 2: {
+                printListBookMenu();
+                break;
+            }
+            case 3: {
+                dataController.serilizableData(library.getBookList());
+                break;
+            }
+            case 4: {
+                dataController.deserilizableData();
+                break;
+            }
+            case 5: {
+                reverseReturnBookMenu();
+                break;
+            }
+            case 6: {
+                exit(0);
+                break;
+            }
+            default: {
+                out.println("Данного пункта нет в меню!");
+            }
+        }
     }
 
+    public void reverseReturnBookMenu() {
+    }
+
+
+    public void printListBookMenu() {
+
+    }
 
     public void run() throws InterruptedException {
-
-        List<Book> bookList = init().getBookList();
-        Library library1 = new Library(0);
-        Library library2 = new Library(1);
-
-        Thread thread1 = new Thread(library1);
-        Thread thread2 = new Thread(library2);
-
-        thread1.start();
-        thread1.join();
-        thread2.start();
-
-        DataController dataController = new DataController();
-        dataController.serilizableData(bookList);
-        dataController.deserilizableData();
+        menuUI();
     }
-
 }
